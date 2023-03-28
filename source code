@@ -8,6 +8,8 @@ import pyjokes
 import time
 from plyer import notification
 import sys
+import json
+import requests
 
 engine=pyttsx3.init('sapi5') #sapi5 is Microsoft's voice recognition api
 voices=engine.getProperty('voices')
@@ -54,85 +56,117 @@ if __name__ == '__main__':
             query=query.replace('wikipedia','')
             results=wikipedia.summary(query,sentences=2)
             speak(f'according to wikipedia {results}')
+
         elif 'open youtube' in query:
             speak('opening youtube')
             webbrowser.open('youtube.com')
+
         elif 'open google' in query:
             speak('opening google')
             webbrowser.open('google.com')
+
         elif 'open instagram' in query:
             speak('opening instagram')
             webbrowser.open('https://www.instagram.com/')
+
         elif 'open whatsapp' in query:
             speak('opening whatsapp')
             webbrowser.open('https://web.whatsapp.com/')
+
         elif 'open gmail' in query:
             speak('opening gmail')
             webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
+
         elif 'the time' in query:
             time=datetime.datetime.now().strftime('%I %M %p')
             speak(f"it's {time}")
+
         elif 'date' in query:
             date=datetime.datetime.now().strftime('%d %B %Y')
             speak(f"it's {date}")
+
         elif 'day' in query:
             day=datetime.datetime.now().strftime('%A %d %B %Y')
             speak(f'its {day}')
+
         elif 'open code' in query:
             speak('opening code')
             codepath="C:\\Program Files\\JetBrains\\PyCharm Community Edition 2022.3.1\\bin\pycharm64.exe"
             os.startfile(codepath)
+
         elif 'open netflix' in query:
             speak('opening netflix')
             webbrowser.open('https://www.netflix.com/browse')
-        elif 'weather' in query:
-            speak('opening weather forecast')
-            weather=webbrowser.open('https://www.google.com/search?q=weather&oq=weather&aqs=chrome..69i57j0i10i131i433i512l2j0i10i131i433i457i512j0i402j0i10i131i433i512l2j0i10i512j46i10i131i433i512j0i131i433.4576j1j15&sourceid=chrome&ie=UTF-8')
+
+        elif 'weather' in query or 'temperature' in query:
+            url = #INSERT YOUR WEATHER API_KEY HERE AND ENTER THE PLACE OF WHICH INFORMATION IS REQUIRED.   
+            q = requests.get(url)
+            wt_dict = json.loads(q.text)
+            info1 = wt_dict['current']['temp_c']
+            info2 = wt_dict['current']['feelslike_c']
+            speak(f'its {info1} degree celcius but feels like {info2}')
+
+
         elif 'humor' in query:
             speak('no, i am just an AI and i dont have any humour or emotions')
+
         elif 'your name' in query:
             speak('My name is AI 1')
+
         elif 'any name' in query:
             speak('My name is AI 1')
+
         elif 'a name' in query:
             speak('My name is AI 1')
+
         elif 'are you' in query:
             speak('i am Ai 1 and i am here to help you with some specific tasks assigned by my owner.')
+
         elif 'wake up' in query:
             speak('hello! how may i help you?')
+
         elif 'for me' in query:
             speak('i can help you with specific tasks limited by my training.')
+
         elif 'like what' in query:
             speak('i can perform tasks like opening any random apps, searching wikipedia, telling the date and time, etc')
+
         elif 'a joke' in query:
             jokes1=pyjokes.get_joke(language='en',category='all')
             speak(jokes1)
+
         elif 'any joke' in query:
             jokes2=pyjokes.get_joke(language='en',category='all')
             speak(jokes2)
+
         elif 'another joke' in query:
             jokes3=pyjokes.get_joke(language='en',category='all')
             speak(jokes3)
+
         elif 'reminder to drink water' in query:
             speak('reminder set')
             notification.notify(title="**REMINDER**",message='Time to drink water!!',timeout=12,app_icon="C:\\Users\\Yuvraj\\Downloads\\water.ico")
             time.sleep(60*60)
+
         elif 'to drink water' in query:
             notification.notify(title="**REMINDER**", message='Time to drink water!!', timeout=12,app_icon="C:\\Users\\Yuvraj\\Downloads\\water.ico")
             time.sleep(60 * 60)
+
         elif 'bye' in query:
             speak('Goodbye')
             sys.exit()
+
         elif 'quit' in query:
             speak('Goodbye')
             sys.exit()
+
         elif 'see you' in query:
             speak('Goodbye')
             sys.exit()
+
         elif 'stop listening' in query:
             speak('Goodbye')
             sys.exit()
-
 
 
 
